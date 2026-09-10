@@ -2,16 +2,7 @@
 
 /* oxlint-disable next/no-img-element -- gallery files are pre-optimized WebP assets */
 
-import { useEffect, useState } from 'react';
-
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+import { useEffect, useRef, useState } from 'react';
 
 import { assetPath } from './asset-path';
 import {
@@ -21,13 +12,23 @@ import {
   type PortfolioProject,
 } from './i18n';
 
+const galleryAliases: Record<string, Record<number, number>> = {
+  'veins-of-vanity': { 7: 1 },
+  'horse-games': { 36: 7, 37: 9, 38: 10, 39: 13, 40: 16, 41: 25, 42: 6 },
+};
+
 function getGalleryImages(project: PortfolioProject) {
-  const images = Array.from({ length: project.galleryCount }, (_, index) => ({
-    type: 'image' as const,
-    src: assetPath(
-      `/gallery/${project.gallerySlug}/${String(index + 1).padStart(2, '0')}.webp`,
-    ),
-  }));
+  const images = Array.from({ length: project.galleryCount }, (_, index) => {
+    const number = index + 1;
+    const fileNumber = galleryAliases[project.gallerySlug]?.[number] ?? number;
+
+    return {
+      type: 'image' as const,
+      src: assetPath(
+        `/gallery/${project.gallerySlug}/${String(fileNumber).padStart(2, '0')}.webp`,
+      ),
+    };
+  });
 
   return project.galleryVideo
     ? [
@@ -50,6 +51,7 @@ export function ProjectGallery({
 }) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const media = getGalleryImages(project);
   const labels = siteCopy[language].gallery;
   const credits = caseCredits[project.gallerySlug] ?? [];
@@ -79,20 +81,37 @@ export function ProjectGallery({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [open, media.length]);
 
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    if (open && !dialog.open) dialog.showModal();
+    if (!open && dialog.open) dialog.close();
+  }, [open]);
+
   const handleOpenChange = (nextOpen: boolean) => {
     setOpen(nextOpen);
     if (nextOpen) setActiveIndex(0);
   };
 
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger
+    <>
+      <button
+        type="button"
         className="project-trigger"
         aria-label={`${labels.openGallery} ${project.title}`}
+        onClick={() => handleOpenChange(true)}
       >
         <figure>
           <div className="image-wrap">
-            <img src={assetPath(project.image)} alt={project.alt} loading="lazy" />
+            <img
+              src={assetPath(project.image)}
+              alt={project.alt}
+              width={project.width}
+              height={project.height}
+              loading="lazy"
+              decoding="async"
+            />
             <span className="view-mark" aria-hidden="true">
               {labels.openMark} / {media.length}
             </span>
@@ -103,126 +122,142 @@ export function ProjectGallery({
             <span>{project.note}</span>
           </figcaption>
         </figure>
-      </DialogTrigger>
+      </button>
 
-      <DialogContent className="gallery-dialog" showCloseButton={false}>
-        <DialogClose className="gallery-close" aria-label={labels.close}>
-          <span aria-hidden="true">×</span>
-        </DialogClose>
-        <header className="gallery-header">
-          <DialogTitle>{project.title}</DialogTitle>
-          <DialogDescription>
-            {String(activeIndex + 1).padStart(2, '0')} /{' '}
-            {String(media.length).padStart(2, '0')}
-          </DialogDescription>
-        </header>
-
-        <div className="gallery-stage">
-          {media[activeIndex].type === 'video' ? (
-            <video
-              src={media[activeIndex].src}
-              poster={media[activeIndex].poster}
-              controls
-              playsInline
-              preload="metadata"
-              aria-label={`${project.title} — ${labels.video} ${activeIndex + 1} ${labels.of} ${media.length}`}
-            >
-              <track
-                kind="captions"
-                src={assetPath('/media/pony-video-captions.vtt')}
-                srcLang="en"
-                label="Audio cues"
-              />
-            </video>
-          ) : (
-            <img
-              src={media[activeIndex].src}
-              alt={`${project.title} — ${labels.photo} ${activeIndex + 1} ${labels.of} ${media.length}`}
-            />
-          )}
-          {media.length > 1 && (
-            <div className="gallery-nav" aria-label={labels.navigation}>
-              <button
-                type="button"
-                onClick={showPrevious}
-                aria-label={labels.previousMedia}
-              >
-                {labels.previous}
-              </button>
-              <button
-                type="button"
-                onClick={showNext}
-                aria-label={labels.nextMedia}
-              >
-                {labels.next}
-              </button>
-            </div>
-          )}
-        </div>
-
-        <div className="gallery-thumbs" aria-label={labels.allMedia}>
-          {media.map((item, index) => (
-            <button
-              type="button"
-              className={index === activeIndex ? 'is-active' : undefined}
-              onClick={() => setActiveIndex(index)}
-              aria-label={`${labels.openMedia} ${index + 1}`}
-              aria-current={index === activeIndex ? 'true' : undefined}
-              key={item.src}
-            >
-              {item.type === 'video' ? (
-                <video
-                  src={item.src}
-                  poster={item.poster}
-                  muted
-                  playsInline
-                  preload="none"
-                  aria-hidden="true"
-                >
-                  <track
-                    kind="captions"
-                    src={assetPath('/media/pony-video-captions.vtt')}
-                    srcLang="en"
-                    label="Audio cues"
-                  />
-                </video>
-              ) : (
-                <img src={item.src} alt="" aria-hidden="true" loading="lazy" />
-              )}
-            </button>
-          ))}
-        </div>
-
-        {credits.length > 0 && (
-          <section
-            className="case-details"
-            aria-labelledby={`case-details-${project.gallerySlug}`}
+      {open && (
+        <dialog
+          ref={dialogRef}
+          className="gallery-dialog"
+          aria-labelledby={`gallery-title-${project.gallerySlug}`}
+          aria-describedby={`gallery-counter-${project.gallerySlug}`}
+          onCancel={() => handleOpenChange(false)}
+        >
+          <button
+            type="button"
+            className="gallery-close"
+            aria-label={labels.close}
+            onClick={() => handleOpenChange(false)}
           >
-            <p
-              className="case-details-title"
-              id={`case-details-${project.gallerySlug}`}
-            >
-              {details.title}
+            <span aria-hidden="true">×</span>
+          </button>
+          <header className="gallery-header">
+            <h2 id={`gallery-title-${project.gallerySlug}`}>{project.title}</h2>
+            <p id={`gallery-counter-${project.gallerySlug}`} aria-live="polite">
+              {String(activeIndex + 1).padStart(2, '0')} /{' '}
+              {String(media.length).padStart(2, '0')}
             </p>
-            <div className="case-details-groups">
-              {credits.map((group) => (
-                <div className="case-details-group" key={group.role}>
-                  <h3>{details.roles[group.role]}</h3>
-                  <ul>
-                    {group.people.map((person) => (
-                      <li key={person.href}>
-                        <a href={person.href} target="_blank" rel="noreferrer">
-                          {person.label} ↗
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-      </DialogContent>
-    </Dialog>
+          </header>
+
+          <div className="gallery-stage">
+            {media[activeIndex].type === 'video' ? (
+              <video
+                src={media[activeIndex].src}
+                poster={media[activeIndex].poster}
+                controls
+                playsInline
+                preload="metadata"
+                aria-label={`${project.title} — ${labels.video} ${activeIndex + 1} ${labels.of} ${media.length}`}
+              >
+                <track
+                  kind="captions"
+                  src={assetPath('/media/pony-img-3912-captions.vtt')}
+                  srcLang="en"
+                  label="Audio description"
+                  default
+                />
+              </video>
+            ) : (
+              <img
+                src={media[activeIndex].src}
+                alt={`${project.title} — ${labels.photo} ${activeIndex + 1} ${labels.of} ${media.length}`}
+                decoding="async"
+              />
+            )}
+            {media.length > 1 && (
+              <div className="gallery-nav" aria-label={labels.navigation}>
+                <button
+                  type="button"
+                  onClick={showPrevious}
+                  aria-label={labels.previousMedia}
+                >
+                  {labels.previous}
+                </button>
+                <button
+                  type="button"
+                  onClick={showNext}
+                  aria-label={labels.nextMedia}
+                >
+                  {labels.next}
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div className="gallery-thumbs" aria-label={labels.allMedia}>
+            {media.map((item, index) => (
+              <button
+                type="button"
+                className={index === activeIndex ? 'is-active' : undefined}
+                onClick={() => setActiveIndex(index)}
+                aria-label={`${labels.openMedia} ${index + 1}`}
+                aria-current={index === activeIndex ? 'true' : undefined}
+                key={`${item.src}-${index}`}
+              >
+                {item.type === 'video' ? (
+                  <video
+                    poster={item.poster}
+                    muted
+                    playsInline
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <img
+                    src={item.src}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+
+          {credits.length > 0 && (
+            <section
+              className="case-details"
+              aria-labelledby={`case-details-${project.gallerySlug}`}
+            >
+              <p
+                className="case-details-title"
+                id={`case-details-${project.gallerySlug}`}
+              >
+                {details.title}
+              </p>
+              <div className="case-details-groups">
+                {credits.map((group) => (
+                  <div className="case-details-group" key={group.role}>
+                    <h3>{details.roles[group.role]}</h3>
+                    <ul>
+                      {group.people.map((person) => (
+                        <li key={person.href}>
+                          <a
+                            href={person.href}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {person.label} ↗
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </dialog>
+      )}
+    </>
   );
 }

@@ -1,43 +1,40 @@
-'use client';
-
 import type { Language } from './i18n';
 import { siteCopy } from './i18n';
+import { assetPath } from './asset-path';
 
 const options = [
   { value: 'ru', shortLabel: 'РУ' },
   { value: 'en', shortLabel: 'ENG' },
 ] as const;
 
-export function LanguageSwitcher({
-  language,
-  onChange,
-}: {
-  language: Language;
-  onChange: (language: Language) => void;
-}) {
+export function LanguageSwitcher({ language }: { language: Language }) {
   const labels = siteCopy[language].language;
 
   return (
-    <fieldset className="language-switcher" data-language={language}>
-      <legend className="sr-only">{labels.legend}</legend>
+    <nav
+      className="language-switcher"
+      data-language={language}
+      aria-label={labels.legend}
+    >
       <span className="language-slider" aria-hidden="true" />
       {options.map((option) => {
         const label = option.value === 'ru' ? labels.russian : labels.english;
 
         return (
-          <label className="language-choice" title={label} key={option.value}>
-            <input
-              type="radio"
-              name="site-language"
-              value={option.value}
-              checked={language === option.value}
-              onChange={() => onChange(option.value)}
-              aria-label={label}
-            />
+          <a
+            className="language-choice"
+            href={assetPath(option.value === 'ru' ? '/' : '/en/')}
+            hrefLang={option.value}
+            lang={option.value}
+            aria-label={label}
+            aria-current={language === option.value ? 'page' : undefined}
+            title={label}
+            key={option.value}
+          >
             <span>{option.shortLabel}</span>
-          </label>
+          </a>
         );
       })}
-    </fieldset>
+    </nav>
   );
 }
