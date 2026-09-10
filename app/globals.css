@@ -47,6 +47,7 @@ a {
 
 img {
   display: block;
+  height: auto;
   max-width: 100%;
 }
 
@@ -411,7 +412,7 @@ a:focus-visible {
   font-size: clamp(2.8rem, 6vw, 6.5rem);
   font-style: italic;
   font-weight: 400;
-  line-height: 0.94;
+  line-height: 1;
   letter-spacing: -0.055em;
   text-wrap: balance;
 }
@@ -467,7 +468,7 @@ a:focus-visible {
   font-size: clamp(2.5rem, 6vw, 6rem);
   font-style: italic;
   font-weight: 400;
-  line-height: 0.9;
+  line-height: 1;
   letter-spacing: -0.045em;
 }
 
@@ -482,6 +483,10 @@ a:focus-visible {
   grid-template-columns: repeat(12, 1fr);
   gap: 7vw 18px;
   padding-top: 5vw;
+}
+
+.project-card {
+  align-self: start;
 }
 
 .project-card:nth-child(4n + 1) {
@@ -525,12 +530,16 @@ a:focus-visible {
 
 .image-wrap {
   position: relative;
+  display: grid;
+  place-items: center;
   overflow: hidden;
   background: #121212;
 }
 
 .project-card img {
-  width: 100%;
+  width: auto;
+  height: auto;
+  max-width: 100%;
   filter: saturate(0.84) contrast(1.06);
   transition:
     filter 350ms ease,
@@ -838,7 +847,7 @@ a:focus-visible {
   font-size: clamp(4rem, 12vw, 12rem);
   font-style: italic;
   font-weight: 400;
-  line-height: 0.78;
+  line-height: 1;
   letter-spacing: -0.07em;
 }
 
@@ -966,7 +975,7 @@ footer {
   font-family: Georgia, 'Times New Roman', serif;
   font-size: clamp(3rem, 9vw, 9rem);
   font-style: italic;
-  line-height: 0.86;
+  line-height: 1;
   letter-spacing: -0.06em;
 }
 
@@ -1053,6 +1062,12 @@ footer {
 @keyframes signal {
   to {
     transform: translateX(-50%);
+  }
+}
+
+@media (min-width: 721px) {
+  .project-card img {
+    max-height: calc(100svh - 9rem);
   }
 }
 
