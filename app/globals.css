@@ -1243,7 +1243,7 @@ footer {
     margin-top: 12vw;
     font-size: clamp(3rem, 10vw, 6rem);
     line-height: 1.12;
-    letter-spacing: -0.045em;
+    letter-spacing: -0.025em;
   }
 
   .frame-archive {
