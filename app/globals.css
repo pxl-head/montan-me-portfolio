@@ -1,4 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Roboto+Condensed:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=Roboto+Mono:wght@400;500;700&display=swap');
+
 :root {
+  --font-body: 'Roboto Condensed', Arial, sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'Roboto Mono', 'Courier New', monospace;
   --background: #080808;
   --foreground: #f3f0ea;
   --theme-color: #ad00fc;
@@ -1311,4 +1316,46 @@ footer {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+/* Narrow Google Font system: condensed body, editorial display, compact labels. */
+body {
+  font-family: var(--font-body);
+}
+
+.statement h1,
+.section-heading h2,
+.frame-heading h2,
+.process-note h2,
+.contact-link {
+  font-family: var(--font-display);
+}
+
+.language-switcher,
+.site-menu summary::after,
+.site-menu-label,
+.project-menu-link,
+.eyebrow,
+.hero-corners,
+.section-heading > p:last-child,
+.signal-strip,
+.view-mark,
+.project-card figcaption,
+.gallery-header,
+.gallery-header p,
+.case-details-title,
+.case-details-group h3,
+.case-details-group li,
+.note-index,
+.frame-wall figcaption,
+.footer-mark p,
+.email-link,
+.social-list a span:first-child,
+.footer-bottom,
+.site-credit {
+  font-family: var(--font-mono);
+}
+
+.project-card h3,
+.gallery-header h2 {
+  font-family: var(--font-body);
 }
