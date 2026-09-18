@@ -237,7 +237,7 @@ export function PortfolioPage({ language }: { language: Language }) {
         <p className="site-credit">
           {copy.footer.credit}{' '}
           <a
-            href="https://pxl-head-portfolio.pxl-head.chatgpt.site"
+            href="https://pxl-head.github.io/pxl-head-portfolio/?v=6baac57#photo"
             target="_blank"
             rel="noreferrer"
           >
