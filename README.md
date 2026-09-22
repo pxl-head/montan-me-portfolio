@@ -1,24 +1,41 @@
 # MONTAN.ME
 
-Personal bilingual portfolio for Timur Montan, built with Vinext and React.
+Одностраничное двуязычное визуальное портфолио Тимура Монтана с иммерсивной галереей проектов, созданное лично с помощью Codex в ChatGPT.
 
-## Local development
+## Особенности
 
-Requires Node.js 22.13 or newer.
+- Одностраничная композиция с последовательным погружением в работы.
+- Иммерсивная галерея фото- и видеопроектов с крупной редакционной типографикой.
+- Русская и английская версии сайта.
+- Адаптивный интерфейс для компьютеров и мобильных устройств.
+- Статическая публикация через GitHub Pages.
+
+## Технологии
+
+Vinext, React, TypeScript и CSS. Production-сборка проверяется перед публикацией и разворачивается через GitHub Actions.
+
+## Сайт
+
+- Русская версия: https://pxl-head.github.io/montan-me-portfolio/
+- English version: https://pxl-head.github.io/montan-me-portfolio/en/
+
+## Локальная разработка
+
+Требуется Node.js 22.13 или новее.
 
 ```bash
 npm ci
 npm run dev
 ```
 
-Run the complete validation before publishing:
+Полная проверка перед публикацией:
 
 ```bash
 npm run check
 ```
 
-The check covers linting, TypeScript, binary media signatures, and the static
-GitHub Pages build. Pushing `main` deploys `dist/client` through GitHub Actions.
+Проверка включает линтинг, TypeScript, сигнатуры медиафайлов и статическую сборку для GitHub Pages. Изменения в ветке `main` публикуют `dist/client` через GitHub Actions.
 
-- Russian: https://pxl-head.github.io/montan-me-portfolio/
-- English: https://pxl-head.github.io/montan-me-portfolio/en/
+## Авторство
+
+Сайт лично разработан мной с помощью Codex в ChatGPT.
