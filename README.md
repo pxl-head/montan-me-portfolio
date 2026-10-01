@@ -1,41 +1,41 @@
 # MONTAN.ME
 
-Одностраничное двуязычное визуальное портфолио Тимура Монтана с иммерсивной галереей проектов, созданное лично с помощью Codex в ChatGPT.
+A bilingual, single-page visual portfolio for Timur Montan, built around an immersive gallery of projects. I designed and built the website myself with Codex in ChatGPT.
 
-## Особенности
+## Features
 
-- Одностраничная композиция с последовательным погружением в работы.
-- Иммерсивная галерея фото- и видеопроектов с крупной редакционной типографикой.
-- Русская и английская версии сайта.
-- Адаптивный интерфейс для компьютеров и мобильных устройств.
-- Статическая публикация через GitHub Pages.
+- A single-page composition that draws visitors into the work as they scroll.
+- An immersive gallery of photography and video projects, paired with large editorial typography.
+- Russian and English versions.
+- Responsive layouts for desktop and mobile.
+- A static site published through GitHub Pages.
 
-## Технологии
+## Technology
 
-Vinext, React, TypeScript и CSS. Production-сборка проверяется перед публикацией и разворачивается через GitHub Actions.
+Vinext, React, TypeScript and CSS. The production build is checked before publication and deployed through GitHub Actions.
 
-## Сайт
+## Live website
 
-- Русская версия: https://pxl-head.github.io/montan-me-portfolio/
-- English version: https://pxl-head.github.io/montan-me-portfolio/en/
+- [Russian version](https://pxl-head.github.io/montan-me-portfolio/).
+- [English version](https://pxl-head.github.io/montan-me-portfolio/en/).
 
-## Локальная разработка
+## Local development
 
-Требуется Node.js 22.13 или новее.
+Requires Node.js 22.13 or later.
 
 ```bash
 npm ci
 npm run dev
 ```
 
-Полная проверка перед публикацией:
+Run the full check before deployment:
 
 ```bash
 npm run check
 ```
 
-Проверка включает линтинг, TypeScript, сигнатуры медиафайлов и статическую сборку для GitHub Pages. Изменения в ветке `main` публикуют `dist/client` через GitHub Actions.
+This checks linting, TypeScript and media file signatures, then creates the static build for GitHub Pages. Changes to the `main` branch publish `dist/client` through GitHub Actions.
 
-## Авторство
+## Authorship
 
-Сайт лично разработан мной с помощью Codex в ChatGPT.
+I designed and built this website myself with Codex in ChatGPT.
