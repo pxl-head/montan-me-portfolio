@@ -959,6 +959,10 @@ a:focus-visible {
   .frame-wall figure:nth-child(6) figcaption {
     text-indent: max(0px, calc((100% - min(42.65svh, 480px)) / 2));
   }
+
+  .frame-wall figure:nth-child(7) figcaption {
+    text-indent: max(0px, calc((100% - min(36svh, 405px)) / 2));
+  }
 }
 
 footer {
