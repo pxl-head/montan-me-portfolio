@@ -246,7 +246,7 @@ export function ProjectGallery({
                             target="_blank"
                             rel="noreferrer"
                           >
-                            {person.label} ↗
+                            {person.label}
                           </a>
                         </li>
                       ))}

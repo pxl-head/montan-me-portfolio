@@ -212,7 +212,7 @@ export function PortfolioPage({ language }: { language: Language }) {
         <div className="contact-main">
           <p className="eyebrow">{copy.footer.contact}</p>
           <a className="contact-link" href="https://t.me/mo0ntan">
-            @mo0ntan ↗
+            @mo0ntan
           </a>
           <a className="email-link" href="mailto:tsergeev58@gmail.com">
             tsergeev58@gmail.com
@@ -224,7 +224,6 @@ export function PortfolioPage({ language }: { language: Language }) {
             <a href={href} key={label}>
               <span>{String(index + 1).padStart(2, '0')}</span>
               <span>{label}</span>
-              <span>↗</span>
             </a>
           ))}
         </div>

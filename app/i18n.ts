@@ -236,7 +236,7 @@ export const siteCopy: Record<Language, SiteCopy> = {
     hero: {
       alt: 'MONTAN.ME — дизайн, творчество и перформанс',
       portfolio: 'ПОРТФОЛИО / 2026',
-      scroll: 'ЛИСТАЙТЕ НИЖЕ ↓',
+      scroll: 'ЛИСТАЙТЕ НИЖЕ',
     },
     statement: {
       eyebrow: '[ ЛИЧНЫЙ АРХИВ ]',
@@ -405,7 +405,7 @@ export const siteCopy: Record<Language, SiteCopy> = {
       contact: '[ КОНТАКТЫ ]',
       credit: 'The site was created by',
       socialsLabel: 'Социальные сети',
-      backToTop: 'НАВЕРХ ↑',
+      backToTop: 'НАВЕРХ',
     },
     gallery: {
       openGallery: 'Открыть галерею проекта',
@@ -416,8 +416,8 @@ export const siteCopy: Record<Language, SiteCopy> = {
       navigation: 'Навигация по галерее',
       previousMedia: 'Предыдущий материал',
       nextMedia: 'Следующий материал',
-      previous: '← НАЗАД',
-      next: 'ДАЛЬШЕ →',
+      previous: 'НАЗАД',
+      next: 'ДАЛЬШЕ',
       allMedia: 'Все материалы проекта',
       openMedia: 'Открыть материал',
       close: 'Закрыть галерею',
@@ -464,7 +464,7 @@ export const siteCopy: Record<Language, SiteCopy> = {
     hero: {
       alt: 'MONTAN.ME — design, creativity and performance',
       portfolio: 'PORTFOLIO / 2026',
-      scroll: 'SCROLL TO ENTER ↓',
+      scroll: 'SCROLL TO ENTER',
     },
     statement: {
       eyebrow: '[ PERSONAL ARCHIVE ]',
@@ -633,7 +633,7 @@ export const siteCopy: Record<Language, SiteCopy> = {
       contact: '[ CONTACT ]',
       credit: 'The site was created by',
       socialsLabel: 'Social media',
-      backToTop: 'BACK TO TOP ↑',
+      backToTop: 'BACK TO TOP',
     },
     gallery: {
       openGallery: 'Open project gallery',
@@ -644,8 +644,8 @@ export const siteCopy: Record<Language, SiteCopy> = {
       navigation: 'Gallery navigation',
       previousMedia: 'Previous media',
       nextMedia: 'Next media',
-      previous: '← PREV',
-      next: 'NEXT →',
+      previous: 'PREV',
+      next: 'NEXT',
       allMedia: 'All project media',
       openMedia: 'Open media',
       close: 'Close gallery',
